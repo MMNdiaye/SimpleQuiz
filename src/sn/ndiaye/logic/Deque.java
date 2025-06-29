@@ -2,7 +2,7 @@ package sn.ndiaye.logic;
 
 import java.util.Iterator;
 
-public class Deque<T> implements Iterable<T>{
+class Deque<T> implements Iterable<T>{
     private Node firstNode;
     private Node lastNode;
 

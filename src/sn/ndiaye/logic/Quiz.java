@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Random;
 
 
-class Quiz implements Iterable<QuizCard> {
+public class Quiz implements Iterable<QuizCard> {
     private static Deque<QuizCard> quizCardsPile;
 
     private Quiz() {
@@ -23,6 +23,9 @@ class Quiz implements Iterable<QuizCard> {
     private static void shuffleCards(List<QuizCard> quizCards) {
         Random random = new Random();
         for (QuizCard card : quizCards) {
+            if (!card.isUsable()) {
+                continue;
+            }
             double randomPicked = random.nextDouble();
             if (randomPicked < 0.5)
                 quizCardsPile.addToFront(card);
