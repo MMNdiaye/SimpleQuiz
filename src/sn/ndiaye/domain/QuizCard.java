@@ -20,7 +20,7 @@ public class QuizCard {
         this.correctAnswer = correctAnswer;
     }
 
-    public void addBadAnswer(String wrongAnswer) {
+    public void addWrongAnswer(String wrongAnswer) {
         wrongAnswers.add(wrongAnswer);
     }
 
