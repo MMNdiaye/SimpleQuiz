@@ -1,4 +1,4 @@
-package sn.ndiaye.views.textUIs.admin.subUIs;
+package sn.ndiaye.views.textUIs.admin.subUIs.create;
 
 import sn.ndiaye.domain.QuizCard;
 import sn.ndiaye.logic.Quiz;
@@ -35,8 +35,7 @@ public class CreateQuizUI extends TextUI {
     private List<QuizCard> createCards() {
         List<QuizCard> quizCards = new ArrayList<>();
         while (true) {
-            QuizCard newCard = initializeQuestion();
-            addAnswerToQuizCard(newCard);
+            QuizCard newCard = new CreateQuizCardUI().createQuizCard();
             quizCards.add(newCard);
             System.out.println("QuizCard added successfully");
             if (hasFinishedAdding())
@@ -64,34 +63,7 @@ public class CreateQuizUI extends TextUI {
     }
 
 
-
-    private QuizCard initializeQuestion() {
-        QuizCard quizCard = new QuizCard();
-        System.out.println("Enter a new Question:");
-        quizCard.setQuestion(scanner.nextLine());
-        return quizCard;
-    }
-
-    private void addAnswerToQuizCard(QuizCard quizCard) {
-        System.out.println("Enter the correct answer:");
-        quizCard.setCorrectAnswer(scanner.nextLine());
-        addEnoughWrongAnswers(quizCard);
-    }
-
-    private void addEnoughWrongAnswers(QuizCard quizCard) {
-        boolean hasEnoughAnswers;
-        while (true) {
-            System.out.println("Add a wrong answer:");
-            quizCard.addWrongAnswer(scanner.nextLine());
-            hasEnoughAnswers = quizCard.getWrongAnswers().size() > 1;
-            if (!hasEnoughAnswers)
-                continue;
-            if (hasFinishedAdding())
-                break;
-        }
-    }
-
-    private boolean hasFinishedAdding() {
+    protected boolean hasFinishedAdding() {
         boolean hasFinished;
         System.out.println("Continue? y/n");
         String continuationAnswer = scanner.nextLine().toLowerCase();

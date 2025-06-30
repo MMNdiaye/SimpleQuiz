@@ -13,9 +13,4 @@ public class AdminMenuUI extends MenuUI {
     }
 
 
-    private void createQuiz() {
-
-
-    }
-
 }

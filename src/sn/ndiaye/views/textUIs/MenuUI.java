@@ -1,12 +1,16 @@
 package sn.ndiaye.views.textUIs;
 
-import sn.ndiaye.views.textUIs.admin.subUIs.CreateQuizUI;
+import sn.ndiaye.views.textUIs.admin.subUIs.create.CreateQuizUI;
+import sn.ndiaye.views.textUIs.admin.subUIs.modify.ModifyQuizUI;
 import sn.ndiaye.views.util.Option;
 
 public abstract class MenuUI extends TextUI {
     private final Option[] menuOptions;
     private final String menu;
     private boolean isExited;
+    private CreateQuizUI createQuizUI;
+    private ModifyQuizUI modifyQuizUI;
+
 
     public MenuUI(Option[] menuOptions) {
         this.menuOptions = menuOptions;
@@ -41,12 +45,17 @@ public abstract class MenuUI extends TextUI {
                     break;
 
                 case MODIFY_QUIZ:
+                    new ModifyQuizUI().start();
                     break;
 
                 case REMOVE_QUIZ:
                     break;
 
                 case DO_QUIZ:
+                    break;
+
+                case ADD_CARD:
+                    modifyQuizUI.addCard();
                     break;
 
                 case QUIT:
@@ -66,13 +75,19 @@ public abstract class MenuUI extends TextUI {
             if (input == option.getAccessNumber())
                 return option;
         }
-        return null;
+        return Option.NULL;
     }
 
     @Override
     public void stop() {
-        scanner.close();
         isExited = true;
     }
 
+    public void setCreateQuizUI(CreateQuizUI createQuizUI) {
+        this.createQuizUI = createQuizUI;
+    }
+
+    public void setModifyQuizUI(ModifyQuizUI modifyQuizUI) {
+        this.modifyQuizUI = modifyQuizUI;
+    }
 }

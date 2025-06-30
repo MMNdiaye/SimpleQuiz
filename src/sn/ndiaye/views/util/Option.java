@@ -4,7 +4,12 @@ public enum Option {
     ADD_QUIZ(1, "Add a new quiz"),
     MODIFY_QUIZ(2, "Modify a quiz"),
     REMOVE_QUIZ(3, "Remove a quiz"),
+    RENAME_QUIZ(4, "Edit the theme"),
     DO_QUIZ(1, "Do a quiz"),
+    ADD_CARD(1, "Add a new card"),
+    MODIFY_CARD(2,"Modify a card"),
+    REMOVE_CARD(3, "Remove a card"),
+    NULL(0, ""),
     QUIT(0, "Quit");
 
     private int accessNumber;

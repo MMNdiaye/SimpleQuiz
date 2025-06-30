@@ -29,9 +29,10 @@ public final class QuizzesLoader {
     }
 
     public static void saveQuizToFile(Quiz quiz, String filePath) throws IOException, ClassNotFoundException {
+        List<Quiz> quizzes = loadQuizzesFromFile(filePath);
+
         ObjectOutputStream output = new ObjectOutputStream(
                 new FileOutputStream(filePath));
-        List<Quiz> quizzes = loadQuizzesFromFile(filePath);
         quizzes.add(quiz);
         quizzes.stream().forEach(qz -> {
             try {
