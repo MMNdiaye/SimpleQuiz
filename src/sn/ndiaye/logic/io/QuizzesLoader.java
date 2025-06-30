@@ -4,17 +4,27 @@ import sn.ndiaye.domain.QuizCard;
 import sn.ndiaye.logic.Quiz;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class QuizzesLoader {
 
-    public static List<Quiz> loadQuizzesFromFile(String filePath) throws IOException, ClassNotFoundException {
-        ObjectInputStream input = new ObjectInputStream(
-                new FileInputStream(filePath));
-        List<List<QuizCard>> quizCardDecks = (List<List<QuizCard>>) input.readObject();
-        List<Quiz> quizzes = quizCardDecks.stream().
-                map(quizCards -> Quiz.of(quizCards)).
-                toList();
+    public static List<Quiz> loadQuizzesFromFile(String filePath) {
+        List<Quiz> quizzes = new ArrayList<>();
+        try {
+            ObjectInputStream input = new ObjectInputStream(
+                    new FileInputStream(filePath));
+            while (true) {
+                List<QuizCard> quizCards = (List<QuizCard>) input.readObject();
+                String theme = (String) input.readObject();
+                Quiz quiz = Quiz.of(quizCards);
+                quiz.setTheme(theme);
+                quizzes.add(quiz);
+            }
+
+        } catch (IOException  | ClassNotFoundException e) {
+            //Couldn't read further
+        }
         return quizzes;
     }
 
@@ -23,9 +33,13 @@ public final class QuizzesLoader {
                 new FileOutputStream(filePath));
         List<Quiz> quizzes = loadQuizzesFromFile(filePath);
         quizzes.add(quiz);
-        List<List<QuizCard>> quizCardDecks = quizzes.stream()
-                .map(quizElement -> quizElement.toList()).
-                toList();
-        output.writeObject(quizCardDecks);
+        quizzes.stream().forEach(qz -> {
+            try {
+                output.writeObject(qz.toList());
+                output.writeObject(qz.getTheme());
+            } catch (IOException e) {
+
+            }
+        });
     }
 }

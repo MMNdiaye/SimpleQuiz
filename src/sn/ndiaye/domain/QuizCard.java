@@ -1,9 +1,10 @@
 package sn.ndiaye.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class QuizCard {
+public class QuizCard implements Serializable {
     private String question;
     private final Set<String> wrongAnswers;
     private String correctAnswer;

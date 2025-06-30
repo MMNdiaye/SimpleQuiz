@@ -9,9 +9,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NewQuizUI extends TextUI {
+public class CreateQuizUI extends TextUI {
 
-    public NewQuizUI() {
+    public CreateQuizUI() {
         super();
     }
 
@@ -59,7 +59,7 @@ public class NewQuizUI extends TextUI {
         try {
             QuizzesLoader.saveQuizToFile(quiz, filePath);
         } catch (IOException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
         }
     }
 

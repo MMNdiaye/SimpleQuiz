@@ -1,8 +1,7 @@
 package sn.ndiaye.views.textUIs;
 
+import sn.ndiaye.views.textUIs.admin.subUIs.CreateQuizUI;
 import sn.ndiaye.views.util.Option;
-
-import java.util.Scanner;
 
 public abstract class MenuUI extends TextUI {
     private final Option[] menuOptions;
@@ -38,7 +37,7 @@ public abstract class MenuUI extends TextUI {
             Option option = getOption(input);
             switch (option) {
                 case ADD_QUIZ:
-                    //createQuiz();
+                    new CreateQuizUI().start();
                     break;
 
                 case MODIFY_QUIZ:
