@@ -8,8 +8,8 @@ public abstract class MenuUI extends TextUI {
     private final Option[] menuOptions;
     private final String menu;
     private boolean isExited;
-    private CreateQuizUI createQuizUI;
-    private ModifyQuizUI modifyQuizUI;
+    private static CreateQuizUI createQuizUI;
+    private static ModifyQuizUI modifyQuizUI;
 
 
     public MenuUI(Option[] menuOptions) {
@@ -41,11 +41,13 @@ public abstract class MenuUI extends TextUI {
             Option option = getOption(input);
             switch (option) {
                 case ADD_QUIZ:
-                    new CreateQuizUI().start();
+                    createQuizUI = new CreateQuizUI();
+                    createQuizUI.start();
                     break;
 
                 case MODIFY_QUIZ:
-                    new ModifyQuizUI().start();
+                    modifyQuizUI = new ModifyQuizUI();
+                    modifyQuizUI.start();
                     break;
 
                 case REMOVE_QUIZ:
@@ -56,6 +58,18 @@ public abstract class MenuUI extends TextUI {
 
                 case ADD_CARD:
                     modifyQuizUI.addCard();
+                    break;
+
+                case MODIFY_CARD:
+                    modifyQuizUI.modifyCard();
+                    break;
+
+                case MODIFY_QUESTION:
+                    modifyQuizUI.modifyQuestion();
+                    break;
+
+                case MODIFY_CORRECT_ANSWER:
+                    modifyQuizUI.modifyCorrectAnswer();
                     break;
 
                 case QUIT:
@@ -83,11 +97,4 @@ public abstract class MenuUI extends TextUI {
         isExited = true;
     }
 
-    public void setCreateQuizUI(CreateQuizUI createQuizUI) {
-        this.createQuizUI = createQuizUI;
-    }
-
-    public void setModifyQuizUI(ModifyQuizUI modifyQuizUI) {
-        this.modifyQuizUI = modifyQuizUI;
-    }
 }

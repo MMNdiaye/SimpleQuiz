@@ -28,19 +28,18 @@ public final class QuizzesLoader {
         return quizzes;
     }
 
+    public static void saveQuizzesToFile(List<Quiz> quizzes, String filePath) throws IOException {
+        ObjectOutputStream output = new ObjectOutputStream(
+                new FileOutputStream((filePath)));
+        for (Quiz quiz : quizzes) {
+            output.writeObject(quiz.toList());
+            output.writeObject(quiz.getTheme());
+        }
+    }
+
     public static void saveQuizToFile(Quiz quiz, String filePath) throws IOException, ClassNotFoundException {
         List<Quiz> quizzes = loadQuizzesFromFile(filePath);
-
-        ObjectOutputStream output = new ObjectOutputStream(
-                new FileOutputStream(filePath));
         quizzes.add(quiz);
-        quizzes.stream().forEach(qz -> {
-            try {
-                output.writeObject(qz.toList());
-                output.writeObject(qz.getTheme());
-            } catch (IOException e) {
-
-            }
-        });
+        saveQuizzesToFile(quizzes, filePath);
     }
 }

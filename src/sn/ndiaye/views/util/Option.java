@@ -9,6 +9,11 @@ public enum Option {
     ADD_CARD(1, "Add a new card"),
     MODIFY_CARD(2,"Modify a card"),
     REMOVE_CARD(3, "Remove a card"),
+    MODIFY_QUESTION(1, "Edit the question"),
+    MODIFY_CORRECT_ANSWER(2, "Edit the correct answer"),
+    MODIFY_WRONG_ANSWER(3, "Edit a wrong answer"),
+    ADD_WRONG_ANSWER(4, "Add a wrong answer"),
+    REMOVE_WRONG_ANSWER(5, "Remove a wrong answer"),
     NULL(0, ""),
     QUIT(0, "Quit");
 
