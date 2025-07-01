@@ -8,11 +8,13 @@ import sn.ndiaye.views.textUIs.admin.subUIs.create.CreateQuizCardUI;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 public class ModifyQuizUI extends TextUI {
     private List<Quiz> quizzes;
     private Quiz selectedQuiz;
     private QuizCard selectedQuizCard;
+    private int selectedIndex;
     private String filePath;
 
     @Override
@@ -28,7 +30,7 @@ public class ModifyQuizUI extends TextUI {
             System.out.println("No quiz saved in this file");
             return;
         }
-        selectedQuiz = chooseQuiz();
+        selectedQuiz = chooseFrom(quizzes);
         ModifyQuizMenu menuUI = new ModifyQuizMenu();
         menuUI.start();
     }
@@ -43,29 +45,34 @@ public class ModifyQuizUI extends TextUI {
         return quizzes;
     }
 
-    private Quiz chooseQuiz() {
-        while (true) {
-            showQuizzes(quizzes);
+
+    private<T> T chooseFrom(List<T> list) {
+        while(true) {
+            show(list);
             String choice = scanner.nextLine();
-            if (isValid(choice, quizzes.size()))
-                return quizzes.get(Integer.valueOf(choice));
+            if (isValid(choice, list.size())) {
+                selectedIndex = Integer.valueOf(choice);
+                return list.get(selectedIndex);
+            }
             System.out.println("Not a valid choice please choose again.");
         }
     }
 
-    private void showQuizzes(List<Quiz> quizzes) {
-        System.out.println("Please choose the quiz to edit");
-        for (int i = 0; i < quizzes.size(); i++) {
-            String quizOption = i + "- " + quizzes.get(i);
+
+    private<T> void show(List<T> list) {
+        System.out.println("Please choose from this list");
+        for (int i = 0; i < list.size(); i++) {
+            String quizOption = i + "- " + list.get(i);
             System.out.println(quizOption);
         }
     }
+
 
     private boolean isValid(String choice, int maxBound) {
         boolean isValidChoice = false;
         try {
             int choiceVal = Integer.valueOf(choice);
-            boolean inBounds = (choiceVal >= 0) && (choiceVal < quizzes.size());
+            boolean inBounds = (choiceVal >= 0) && (choiceVal < maxBound);
             if (inBounds)
                 isValidChoice = true;
         } catch (NumberFormatException e) {
@@ -97,55 +104,71 @@ public class ModifyQuizUI extends TextUI {
     }
 
     public void modifyCard() {
-        selectedQuizCard = chooseQuizCard();
+        selectedQuizCard = chooseFrom(selectedQuiz.toList());
         ModifyQuizCardMenu menuUI = new ModifyQuizCardMenu();
         menuUI.start();
     }
 
     public void removeCard() {
-
+        selectedQuizCard = chooseFrom(selectedQuiz.toList());
+        selectedQuiz.toList().remove(selectedIndex);
+        saveChanges();
     }
 
-    private void showQuizCards(List<QuizCard> quizCards) {
-        for (int i = 0; i < quizCards.size(); i++) {
-            String quizCardOption = i + "- " + quizCards.get(i);
-            System.out.println(quizCardOption);
-        }
-    }
 
-    private QuizCard chooseQuizCard() {
-        List<QuizCard> quizCards = selectedQuiz.toList();
-        QuizCard chosenQuizCard;
-        showQuizCards(quizCards);
-        while (true) {
-            String choice = scanner.nextLine();
-            if (isValid(choice, quizCards.size())) {
-                chosenQuizCard = quizCards.get(Integer.valueOf(choice));
-                break;
-            }
-        }
-        return chosenQuizCard;
-
+    public void renameQuiz() {
+        showChange("theme" , selectedQuiz.getTheme());
+        selectedQuiz.setTheme(getChange());
+        saveChanges();
     }
 
     public void modifyQuestion() {
-        System.out.println("Old question: " + selectedQuizCard.getQuestion());
-        System.out.println("New question: ");
-        String newQuestion = scanner.nextLine();
-        selectedQuizCard.setQuestion(newQuestion);
+        showChange("question", selectedQuizCard.getQuestion());
+        selectedQuizCard.setQuestion(getChange());
         saveChanges();
-        System.out.println(QuizzesLoader.loadQuizzesFromFile(filePath).get(0).toList());
     }
 
     public void modifyCorrectAnswer() {
-        System.out.println("Old correct answer: " + selectedQuizCard.
-                getCorrectAnswer());
-        System.out.println("New answer: ");
-        String newAnswer = scanner.nextLine();
-        selectedQuizCard.setCorrectAnswer(newAnswer);
+        showChange("correct answer", selectedQuizCard.getCorrectAnswer());
+        selectedQuizCard.setCorrectAnswer(getChange());
         saveChanges();
     }
 
+    private void showChange(String type, String value) {
+        System.out.println("Old " + type + ": " + value);
+        System.out.println("New " + type + ": ");
+    }
+
+    private String getChange() {
+        String change = scanner.nextLine();
+        return change;
+    }
+
+    public void modifyWrongAnswer() {
+        String selectedWrongAnswer = chooseFrom(selectedQuizCard.getWrongAnswers());
+        showChange("bad answer", selectedWrongAnswer);
+        replaceWrongAnswer();
+        saveChanges();
+    }
+
+    private void replaceWrongAnswer() {
+        String modifiedWrongAnswer = getChange();
+        selectedQuizCard.getWrongAnswers().remove(selectedIndex);
+        selectedQuizCard.getWrongAnswers().add(modifiedWrongAnswer);
+    }
+
+    public void addWrongAnswer() {
+        System.out.println("New wrong answer: ");
+        String newAnswer = scanner.nextLine();
+        selectedQuizCard.getWrongAnswers().add(newAnswer);
+        saveChanges();
+    }
+
+    public void removeWrongAnswer() {
+        chooseFrom(selectedQuizCard.getWrongAnswers());
+        selectedQuizCard.getWrongAnswers().remove(selectedIndex);
+        saveChanges();
+    }
 
     @Override
     public void stop() {

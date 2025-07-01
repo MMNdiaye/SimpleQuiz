@@ -1,16 +1,16 @@
 package sn.ndiaye.domain;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QuizCard implements Serializable {
     private String question;
-    private final Set<String> wrongAnswers;
+    private final List<String> wrongAnswers;
     private String correctAnswer;
 
     public QuizCard() {
-        wrongAnswers = new HashSet<>();
+        wrongAnswers = new ArrayList<>();
     }
 
     public void setQuestion(String question) {
@@ -44,7 +44,7 @@ public class QuizCard implements Serializable {
         return correctAnswer;
     }
 
-    public Set<String> getWrongAnswers() {
+    public List<String> getWrongAnswers() {
         return wrongAnswers;
     }
 

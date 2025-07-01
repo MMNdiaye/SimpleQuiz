@@ -51,6 +51,7 @@ public abstract class MenuUI extends TextUI {
                     break;
 
                 case REMOVE_QUIZ:
+
                     break;
 
                 case DO_QUIZ:
@@ -64,12 +65,32 @@ public abstract class MenuUI extends TextUI {
                     modifyQuizUI.modifyCard();
                     break;
 
+                case REMOVE_CARD:
+                    modifyQuizUI.removeCard();
+                    break;
+
+                case RENAME_QUIZ:
+                    modifyQuizUI.renameQuiz();
+                    break;
+
                 case MODIFY_QUESTION:
                     modifyQuizUI.modifyQuestion();
                     break;
 
                 case MODIFY_CORRECT_ANSWER:
                     modifyQuizUI.modifyCorrectAnswer();
+                    break;
+
+                case MODIFY_WRONG_ANSWER:
+                    modifyQuizUI.modifyWrongAnswer();
+                    break;
+
+                case ADD_WRONG_ANSWER:
+                    modifyQuizUI.addWrongAnswer();
+                    break;
+
+                case REMOVE_WRONG_ANSWER:
+                    modifyQuizUI.removeWrongAnswer();
                     break;
 
                 case QUIT:

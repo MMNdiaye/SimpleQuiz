@@ -5,7 +5,7 @@ import sn.ndiaye.views.util.Option;
 
 public class ModifyQuizMenu extends MenuUI {
     private static final Option[] menuOptions = {Option.ADD_CARD, Option.MODIFY_CARD,
-    Option.REMOVE_CARD, Option.QUIT};
+    Option.REMOVE_CARD, Option.RENAME_QUIZ, Option.QUIT};
 
     public ModifyQuizMenu() {
         super(menuOptions);
