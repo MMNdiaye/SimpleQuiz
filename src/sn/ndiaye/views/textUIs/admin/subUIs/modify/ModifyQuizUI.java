@@ -31,8 +31,18 @@ public class ModifyQuizUI extends TextUI {
             return;
         }
         selectedQuiz = chooseFrom(quizzes);
+
+    }
+
+    public void modifyQuiz() {
+        start();
         ModifyQuizMenu menuUI = new ModifyQuizMenu();
         menuUI.start();
+    }
+
+    public void removeQuiz() {
+        start();
+        quizzes.remove(selectedQuiz);
     }
 
 
