@@ -1,12 +1,13 @@
 package sn.ndiaye.logic;
 
+import java.io.Serializable;
 import java.util.Iterator;
 
-class Deque<T> implements Iterable<T>{
+class Deque<T> implements Iterable<T>, Serializable {
     private Node firstNode;
     private Node lastNode;
 
-    class Node {
+    class Node implements Serializable{
         private T item;
         private Node nextNode;
 

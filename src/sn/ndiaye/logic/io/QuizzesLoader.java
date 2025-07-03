@@ -14,13 +14,7 @@ public final class QuizzesLoader {
         try {
             ObjectInputStream input = new ObjectInputStream(
                     new FileInputStream(filePath));
-            while (true) {
-                List<QuizCard> quizCards = (List<QuizCard>) input.readObject();
-                String theme = (String) input.readObject();
-                Quiz quiz = Quiz.of(quizCards);
-                quiz.setTheme(theme);
-                quizzes.add(quiz);
-            }
+            quizzes = (List<Quiz>) input.readObject();
 
         } catch (IOException  | ClassNotFoundException e) {
             //Couldn't read further
@@ -31,10 +25,7 @@ public final class QuizzesLoader {
     public static void saveQuizzesToFile(List<Quiz> quizzes, String filePath) throws IOException {
         ObjectOutputStream output = new ObjectOutputStream(
                 new FileOutputStream((filePath)));
-        for (Quiz quiz : quizzes) {
-            output.writeObject(quiz.toList());
-            output.writeObject(quiz.getTheme());
-        }
+        output.writeObject(quizzes);
     }
 
     public static void saveQuizToFile(Quiz quiz, String filePath) throws IOException, ClassNotFoundException {
