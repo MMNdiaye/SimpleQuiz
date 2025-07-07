@@ -2,10 +2,12 @@ package sn.ndiaye.logic;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.List;
 
-class Deque<T> implements Iterable<T>, Serializable {
+public class Deque<T> implements Iterable<T>, Serializable {
     private Node firstNode;
     private Node lastNode;
+    private int size;
 
     class Node implements Serializable{
         private T item;
@@ -24,6 +26,7 @@ class Deque<T> implements Iterable<T>, Serializable {
             lastNode = newNode;
 
         firstNode = newNode;
+        size++;
     }
 
     public void addToBottom(T item) {
@@ -34,6 +37,7 @@ class Deque<T> implements Iterable<T>, Serializable {
             firstNode = newNode;
 
         lastNode = newNode;
+        size++;
     }
 
 
@@ -45,8 +49,12 @@ class Deque<T> implements Iterable<T>, Serializable {
         return lastNode != null;
     }
 
-    private boolean isEmpty() {
+    public boolean isEmpty() {
         return !(hasFirstNode() || hasLastNode());
+    }
+
+    public int size() {
+        return size;
     }
 
     @Override

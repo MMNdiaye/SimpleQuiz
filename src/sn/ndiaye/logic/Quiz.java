@@ -6,16 +6,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 
 public class Quiz implements Iterable<QuizCard>, Serializable {
-    private Deque<QuizCard> quizCardsPile;
+    private List<QuizCard> quizCards;
     private String theme;
 
     private Quiz(List<QuizCard> quizCards) {
-        quizCardsPile = new Deque<>();
-        shuffleCards(quizCards);
+        this.quizCards = Shuffler.shuffle(quizCards);
     }
 
     public static Quiz of(List<QuizCard> quizCards) {
@@ -23,31 +21,19 @@ public class Quiz implements Iterable<QuizCard>, Serializable {
         return quiz;
     }
 
-    private void shuffleCards(List<QuizCard> quizCards) {
-        Random random = new Random();
-        for (QuizCard card : quizCards) {
-            if (!card.isUsable()) {
-                continue;
-            }
-            double randomPicked = random.nextDouble();
-            if (randomPicked < 0.5)
-                quizCardsPile.addToFront(card);
-            else
-                quizCardsPile.addToBottom(card);
-        }
-    }
 
     public List<QuizCard> toList() {
         List<QuizCard> cards = new ArrayList<>();
-        for (QuizCard quizCard : quizCardsPile) {
+        for (QuizCard quizCard : quizCards) {
             cards.add(quizCard);
         }
         return cards;
     }
 
+
     @Override
     public Iterator<QuizCard> iterator() {
-        return quizCardsPile.iterator();
+        return quizCards.iterator();
     }
 
     public String getTheme() {

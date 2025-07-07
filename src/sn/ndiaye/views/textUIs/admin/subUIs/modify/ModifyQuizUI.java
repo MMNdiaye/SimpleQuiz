@@ -8,7 +8,6 @@ import sn.ndiaye.views.textUIs.admin.subUIs.create.CreateQuizCardUI;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 public class ModifyQuizUI extends TextUI {
     private List<Quiz> quizzes;
@@ -43,6 +42,7 @@ public class ModifyQuizUI extends TextUI {
     public void removeQuiz() {
         start();
         quizzes.remove(selectedQuiz);
+        saveChanges();
     }
 
 
@@ -120,8 +120,10 @@ public class ModifyQuizUI extends TextUI {
     }
 
     public void removeCard() {
-        selectedQuizCard = chooseFrom(selectedQuiz.toList());
-        selectedQuiz.toList().remove(selectedIndex);
+        List<QuizCard> quizCards = selectedQuiz.toList();
+        selectedQuizCard = chooseFrom(quizCards);
+        quizCards.remove(selectedIndex);
+        selectedQuiz = Quiz.of(quizCards);
         saveChanges();
     }
 

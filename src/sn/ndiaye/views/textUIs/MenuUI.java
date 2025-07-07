@@ -3,6 +3,7 @@ package sn.ndiaye.views.textUIs;
 import sn.ndiaye.views.textUIs.admin.subUIs.create.CreateQuizUI;
 import sn.ndiaye.views.textUIs.admin.subUIs.display.ShowQuizzesUI;
 import sn.ndiaye.views.textUIs.admin.subUIs.modify.ModifyQuizUI;
+import sn.ndiaye.views.textUIs.player.GameUI;
 import sn.ndiaye.views.util.Option;
 
 public abstract class MenuUI extends TextUI {
@@ -61,6 +62,7 @@ public abstract class MenuUI extends TextUI {
                     break;
 
                 case DO_QUIZ:
+                    new GameUI().start();
                     break;
 
                 case ADD_CARD:
